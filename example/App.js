@@ -144,6 +144,7 @@ export const App = () => {
                 {show && (
                   <DateTimePicker
                     testID="dateTimePicker"
+                    minuteInterval={5}
                     timeZoneOffsetInMinutes={0}
                     value={date}
                     mode={mode}
