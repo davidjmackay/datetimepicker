@@ -132,8 +132,8 @@ export const App = () => {
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {mode === 'time' && moment.utc(date).format('HH:mm')}
-                    {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
+                    {mode === 'time' && moment(date).format('HH:mm')}
+                    {mode === 'date' && moment(date).format('MM/DD/YYYY')}
                   </Text>
                   <Button
                     testID="hidePicker"
