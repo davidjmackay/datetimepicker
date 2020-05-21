@@ -33,6 +33,8 @@ export const App = () => {
     '{dayofweek.abbreviated(2)}',
   );
 
+  const hidePicker = () => setShow(false);
+
   const handleResetPress = () => {
     setDate(undefined);
   };
@@ -72,15 +74,19 @@ export const App = () => {
 
   const showTimepickerDefaultWithInterval = () => {
     showMode('time');
-    setDisplay('default');
     setMinInterval(5);
+    setDisplay('default');
   };
 
   const showTimepickerSpinnerWithInterval = () => {
     showMode('time');
-    setDisplay('spinner');
     setMinInterval(5);
+    setDisplay('spinner');
   };
+
+  const currentDateTime = moment
+    .utc(date)
+    .format(mode === 'time' ? 'HH:mm' : 'MM/DD/YYYY');
 
   if (Platform.OS !== 'windows') {
     return (
@@ -146,7 +152,7 @@ export const App = () => {
                 </View>
                 <View style={styles.button}>
                   <Button
-                    testID="timePickerIntervalButton"
+                    testID="timePickerDefaultIntervalButton"
                     onPress={showTimepickerDefaultWithInterval}
                     title="Show time picker default (with 5 min interval)!"
                   />
@@ -160,19 +166,18 @@ export const App = () => {
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {mode === 'time' && moment.utc(date).format('HH:mm')}
-                    {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
+                    {currentDateTime}
                   </Text>
                   <Button
                     testID="hidePicker"
-                    onPress={() => setShow(false)}
+                    onPress={hidePicker}
                     title="hide picker"
                   />
                 </View>
                 {show && (
                   <DateTimePicker
                     testID="dateTimePicker"
-                    minuteInterval={5}
+                    minuteInterval={interval}
                     timeZoneOffsetInMinutes={0}
                     value={date}
                     mode={mode}
@@ -212,7 +217,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dateFormat}
-                    onValueChange={value => setDateFormat(value)}>
+                    onValueChange={setDateFormat}>
                     <Picker.Item
                       label="day month year"
                       value="day month year"
