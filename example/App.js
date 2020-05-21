@@ -22,6 +22,7 @@ export const App = () => {
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
+  const [interval, setMinInterval] = useState(undefined);
 
   // Windows-specific
   const [maxDate, setMinDate] = useState(new Date('2021'));
@@ -46,6 +47,7 @@ export const App = () => {
   const showMode = currentMode => {
     setShow(true);
     setMode(currentMode);
+    setMinInterval(undefined);
   };
 
   const showDatepicker = () => {
@@ -66,6 +68,18 @@ export const App = () => {
   const showTimepickerSpinner = () => {
     showMode('time');
     setDisplay('spinner');
+  };
+
+  const showTimepickerDefaultWithInterval = () => {
+    showMode('time');
+    setDisplay('default');
+    setMinInterval(5);
+  };
+
+  const showTimepickerSpinnerWithInterval = () => {
+    showMode('time');
+    setDisplay('spinner');
+    setMinInterval(5);
   };
 
   if (Platform.OS !== 'windows') {
@@ -128,6 +142,20 @@ export const App = () => {
                     testID="timePickerButtonSpinner"
                     onPress={showTimepickerSpinner}
                     title="Show time picker spinner!"
+                  />
+                </View>
+                <View style={styles.button}>
+                  <Button
+                    testID="timePickerIntervalButton"
+                    onPress={showTimepickerDefaultWithInterval}
+                    title="Show time picker default (with 5 min interval)!"
+                  />
+                </View>
+                <View style={styles.button}>
+                  <Button
+                    testID="timePickerIntervalButton"
+                    onPress={showTimepickerSpinnerWithInterval}
+                    title="Show time picker spinner (with 5 min interval)!"
                   />
                 </View>
                 <View style={styles.header}>
